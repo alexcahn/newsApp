@@ -1,4 +1,5 @@
 var express = require("express");
+var exphbs = require("express-handlebars");
 var logger = require("morgan")
 var mongoose = require("mongoose");
 var mongojs = require("mongojs");
@@ -16,6 +17,10 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 app.use(express.static("public"));
+app.engine("handlebars", exphbs({
+    defaultLayout: "main"
+}));
+app.set("view engine", "handlebars");
 
 mongoose.connect("mongodb://localhost/newyorktimes", {
     useNewUrlParser: true
@@ -48,13 +53,28 @@ axios.get("https://www.nytimes.com").then(function (response) {
         });
     });
     db.articles.insert(results)
+    console.log(results)
 });
 
 app.get("/", function (req, res) {
-    res.send("hello")
+    db.articles.find({}, null, {
+        sort: {
+            created: -1
+        }
+    }, function (err, data) {
+        if (data.length === 0) {
+            res.render("placeholder", {
+                message: "There's nothing scraped yet. Please click \"Scrape For Newest Articles\" for fresh and delicious news."
+            });
+        } else {
+            res.render("index", {
+                articles: data
+            });
+        }
+    });
 });
 
-app.get("/articles", function (req, res) {
+app.get("/scrape", function (req, res) {
     db.articles.find({}, function (error, articles) {
         if (error) {
             console.log(error)
@@ -64,17 +84,17 @@ app.get("/articles", function (req, res) {
     })
 });
 
-app.get("/articles/:id", function (req, res) {
-    db.articles.find({
-            _id: req.params.id
-        })
-        .then(function (articles) {
-            res.json(articles)
-        })
-        .catch(function (err) {
-            res.json(err)
-        })
-});
+// app.get("/:id", function (req, res) {
+//     db.articles.find({
+//             _id: req.params.id
+//         })
+//         .then(function (articles) {
+//             res.json(articles)
+//         })
+//         .catch(function (err) {
+//             res.json(err)
+//         })
+// });
 
 app.listen(3000, function () {
     console.log("App running on port 3000!");

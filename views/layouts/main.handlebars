@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New York Times Scraper</title>
+</head>
+
+<body>
+
+    <header>
+        <h1 id="sitename">NYT Scraper</h1>
+        <a href="/"><button id="all-articles">All Articles</button></a>
+        <form action="/scrape" method="GET">
+            <button type="submit" id="refresh-articles">Scrape For Newest
+                Articles</button>
+        </form>
+
+        <div id="container">
+            {{{ body }}}
+        </div>
+
+</body>
+
+</html>
