@@ -1,5 +1,6 @@
 var express = require("express");
 var logger = require("morgan")
+var mongoose = require("mongoose");
 var mongojs = require("mongojs");
 
 var cheerio = require("cheerio");
@@ -15,6 +16,10 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 app.use(express.static("public"));
+
+mongoose.connect("mongodb://localhost/newyorktimes", {
+    useNewUrlParser: true
+});
 
 var databaseUrl = "newyorktimes";
 var collections = ["articles"];
@@ -47,7 +52,7 @@ axios.get("https://www.nytimes.com").then(function (response) {
 
 app.get("/", function (req, res) {
     res.send("hello")
-})
+});
 
 app.get("/articles", function (req, res) {
     db.articles.find({}, function (error, articles) {
@@ -57,6 +62,18 @@ app.get("/articles", function (req, res) {
             res.json(articles)
         }
     })
+});
+
+app.get("/articles/:id", function (req, res) {
+    db.articles.find({
+            _id: req.params.id
+        })
+        .then(function (articles) {
+            res.json(articles)
+        })
+        .catch(function (err) {
+            res.json(err)
+        })
 });
 
 app.listen(3000, function () {
