@@ -2,24 +2,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
     <title>New York Times Scraper</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/materia/bootstrap.min.css" />
 </head>
 
 <body>
-
-    <header>
-        <h1 id="sitename">NYT Scraper</h1>
-        <a href="/"><button id="all-articles">All Articles</button></a>
-        <form action="/scrape" method="GET">
-            <button type="submit" id="refresh-articles">Scrape For Newest
-                Articles</button>
-        </form>
-
-        <div id="container">
-            {{{ body }}}
-        </div>
-
+    {{{ body }}}
 </body>
 
 </html>
