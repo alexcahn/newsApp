@@ -1,4 +1,3 @@
-/* global bootbox */
 $(document).ready(function () {
     var articleContainer = $(".article-container");
     $(document).on("click", ".btn.save", handleArticleSave);
