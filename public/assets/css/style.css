@@ -12,3 +12,9 @@
 .navbar {
     background-color: #394147;
 }
+
+.nav-item,
+.nav-link {
+    color: white;
+    font-size: 18px;
+}
