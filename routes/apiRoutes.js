@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Require all models
 const db = require("../models");
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newyorktimes";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true
 });
